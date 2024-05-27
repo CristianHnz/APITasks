@@ -1,0 +1,126 @@
+openapi: 3.0.0
+info:
+  title: Tarefa API
+  version: 1.0.0
+  description: API para gerenciamento de tarefas
+servers:
+  - url: http://localhost:8080
+paths:
+  /tarefa:
+    get:
+      summary: Listar todas as tarefas
+      tags:
+        - Tarefas
+      responses:
+        '200':
+          description: Lista de tarefas
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Tarefa'
+    post:
+      summary: Criar uma nova tarefa
+      tags:
+        - Tarefas
+      requestBody:
+        description: Tarefa a ser criada
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Tarefa'
+      responses:
+        '200':
+          description: Tarefa criada
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Tarefa'
+  /tarefa/{id}:
+    get:
+      summary: Buscar uma tarefa pelo ID
+      tags:
+        - Tarefas
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Tarefa encontrada
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Tarefa'
+    delete:
+      summary: Deletar uma tarefa pelo ID
+      tags:
+        - Tarefas
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: Tarefa deletada com sucesso
+    put:
+      summary: Atualizar uma tarefa pelo ID
+      tags:
+        - Tarefas
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        description: Dados da tarefa para atualização
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Tarefa'
+      responses:
+        '200':
+          description: Tarefa atualizada
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Tarefa'
+  /tarefa/{id}/status:
+    put:
+      summary: Atualizar o status de uma tarefa pelo ID
+      tags:
+        - Tarefas
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Status da tarefa atualizado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Tarefa'
+components:
+  schemas:
+    Tarefa:
+      type: object
+      properties:
+        id:
+          type: integer
+        titulo:
+          type: string
+        descricao:
+          type: string
+        finalizada:
+          type: boolean
